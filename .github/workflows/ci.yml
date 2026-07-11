@@ -1,0 +1,24 @@
+name: Build & Validate
+
+"on":
+  push:
+  pull_request:
+
+jobs:
+  build-and-validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build (release)
+        run: cargo build --release
+
+      - name: Perft validation (movegen harus SEMUA COCOK)
+        run: cargo run --release -- perfttest
+
+      - name: Bench smoke test (search harus jalan tanpa crash)
+        run: cargo run --release -- bench

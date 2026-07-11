@@ -1,0 +1,19 @@
+[package]
+name = "engine"
+version = "0.1.0"
+edition = "2021"
+default-run = "engine"
+
+[[bin]]
+name = "engine"
+path = "src/main.rs"
+
+[profile.release]
+lto = "fat"
+panic = "abort"
+codegen-units = 1
+opt-level = 3
+
+[profile.dev]
+opt-level = 1
+debug = true
